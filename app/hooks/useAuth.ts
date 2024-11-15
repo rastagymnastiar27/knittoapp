@@ -1,21 +1,29 @@
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { saveToStorage, getFromStorage } from '../utils/storage';
-import { setToken } from '../features/authSlice'; // Pastikan slice auth sudah ada
+import { setToken } from '../features/authSlice';
 
 const useAuth = () => {
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
-    const token = getFromStorage('token');
-    if (token) {
-      dispatch(setToken(token)); // Jika ada token, set token di Redux state
-    }
+    const loadToken = async () => {
+      // Cek jika ada token yang tersimpan di AsyncStorage
+      const token = await getFromStorage('token');
+      if (token) {
+        // Set token ke Redux store
+        dispatch(setToken(token));
+      }
+    };
+
+    loadToken(); // Memanggil fungsi asinkron untuk mengambil token
   }, [dispatch]);
 
   const saveToken = (token: string) => {
-    saveToStorage('token', token); // Simpan token ke storage
-    dispatch(setToken(token)); // Set token ke Redux state
+    // Simpan token ke AsyncStorage
+    saveToStorage('token', token);
+    // Simpan token ke Redux state
+    dispatch(setToken(token));
   };
 
   return { saveToken };

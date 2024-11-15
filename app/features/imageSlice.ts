@@ -1,4 +1,3 @@
-// app/features/imageSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { pixabayApi } from "../api/pixabayApi";
 
@@ -19,29 +18,29 @@ const imageSlice = createSlice({
   initialState,
   reducers: {
     setImages: (state, action: PayloadAction<Array<any>>) => {
-      state.items = action.payload; // Menyimpan gambar baru ke dalam state
+      state.items = action.payload;
     },
     addImages: (state, action: PayloadAction<Array<any>>) => {
-      state.items = [...state.items, ...action.payload]; // Menambahkan gambar baru ke dalam state
+      state.items = [...state.items, ...action.payload];
     },
   },
   extraReducers: (builder) => {
     builder
       .addMatcher(
-        pixabayApi.endpoints.getPixabay.matchFulfilled,
+        pixabayApi.endpoints.getImages.matchFulfilled,
         (state, action) => {
           state.items = action.payload.hits;
           state.loading = false;
         }
       )
-      .addMatcher(pixabayApi.endpoints.getPixabay.matchPending, (state) => {
+      .addMatcher(pixabayApi.endpoints.getImages.matchPending, (state) => {
         state.loading = true;
       })
       .addMatcher(
-        pixabayApi.endpoints.getPixabay.matchRejected,
+        pixabayApi.endpoints.getImages.matchRejected,
         (state, action) => {
           state.loading = false;
-          state.error = action.error.message || "Something went wrong"; // Menangani error
+          state.error = action.error.message || "Something went wrong";
         }
       );
   },

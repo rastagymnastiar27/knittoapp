@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { authApi } from '../api/authApi'; // Import authApi
-import { pixabayApi } from '../api/pixabayApi'; // Import pixabayApi
-import bookmarkReducer from '../features/bookmarkSlice'; // Reducer untuk bookmark
-import authReducer from '../features/authSlice'; // Reducer untuk auth
+import { authApi } from '../api/authApi';
+import { pixabayApi } from '../api/pixabayApi';
+import bookmarkReducer from '../features/bookmarkSlice';
+import authReducer from '../features/authSlice';
 
 const store = configureStore({
   reducer: {
-    auth: authReducer, // Pastikan authReducer ditambahkan di sini
+    auth: authReducer,
     [authApi.reducerPath]: authApi.reducer,
     [pixabayApi.reducerPath]: pixabayApi.reducer,
     bookmark: bookmarkReducer,

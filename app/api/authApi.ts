@@ -1,10 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import axiosClient from './axiosClient';
 
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://pixabay.com/api/', // Ganti dengan base URL API kamu
+    baseUrl: 'https://pixabay.com/api/', // base API url pixabay
     prepareHeaders: (headers) => {
       headers.set('Content-Type', 'application/json');
       return headers;
@@ -13,7 +12,7 @@ export const authApi = createApi({
   endpoints: (builder) => ({
     login: builder.mutation({
       query: ({ username, password }) => ({
-        url: '/login', // Endpoint login
+        url: '/login',
         method: 'POST',
         body: { username, password },
       }),

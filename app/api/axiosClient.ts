@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosClient = axios.create({
-  baseURL: 'https://pixabay.com/api/', // Ganti dengan base URL API kamu
+  baseURL: 'https://pixabay.com/api/', 
   headers: {
     'Content-Type': 'application/json',
   },

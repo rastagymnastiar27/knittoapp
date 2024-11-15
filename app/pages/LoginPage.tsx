@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigation/AppRouter';
-import { setToken } from '../features/authSlice'; // Menyimpan token di Redux
+import useAuth from '../hooks/useAuth'; // Hook untuk manage token
 
 type LoginPageNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
 
@@ -13,19 +13,26 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const dispatch = useDispatch();
-  const navigation = useNavigation<LoginPageNavigationProp>(); // Gunakan tipe navigasi yang sesuai
+  const navigation = useNavigation<LoginPageNavigationProp>();
+  
+  const { saveToken } = useAuth(); // Hook untuk simpan token
 
   const handleLogin = async () => {
     const hardcodedUsername = 'admin';
-    const hardcodedPassword = 'admin'; // Username dan password yang hardcoded
-
+    const hardcodedPassword = 'admin';
+    
     if (username === hardcodedUsername && password === hardcodedPassword) {
-      // Jika login berhasil
-      const token = '47081337-8433ddb8c31f27dc9e144feb6'; // Hardcoded API Key
-      dispatch(setToken(token)); // Simpan token ke Redux
-      navigation.navigate('Home'); // Navigasi ke halaman utama
+      try {
+        const token = '47081337-8433ddb8c31f27dc9e144feb6'; // Token pixabay
+
+        // simpan token ke redux dan asynxstorage
+        saveToken(token);
+        navigation.navigate('Home'); // Navigate ke Home page setelah login sukses
+      } catch (error) {
+        console.error(error);
+        setErrorMessage('Login failed. Please try again.');
+      }
     } else {
-      // Jika login gagal
       setErrorMessage('Invalid username or password.');
     }
   };
@@ -49,7 +56,6 @@ const LoginPage = () => {
       />
       {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
 
-      {/* Custom Login Button - Not Full Width */}
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
         <Text style={styles.loginButtonText}>Login</Text>
       </TouchableOpacity>
@@ -62,11 +68,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    textAlign: 'center',
-    marginBottom: 20,
   },
   input: {
     height: 40,
@@ -81,19 +82,19 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   loginButton: {
-    backgroundColor: '#007BFF', // Tombol dengan warna biru
+    backgroundColor: '#007BFF',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
-    alignSelf: 'center', // Agar tombol berada di tengah
+    alignSelf: 'center',
     marginTop: 16,
-    width: '40%', // Mengatur lebar tombol supaya tidak full width
+    width: '40%',
   },
   loginButtonText: {
-    color: '#fff', // Warna teks putih
+    color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
-    textAlign: 'center', // Agar teks berada di tengah tombol
+    textAlign: 'center',
   },
 });
 

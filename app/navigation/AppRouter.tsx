@@ -1,6 +1,5 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Button } from "react-native";
 import LoginPage from "../pages/LoginPage";
 import HomePage from "../pages/HomePage";
 import BookmarkPage from "../pages/BookmarkPage";
@@ -9,7 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 export type RootStackParamList = {
   Login: undefined;
   Home: undefined;
-  Bookmark: undefined; // Tipe untuk bookmarkedImages
+  Bookmark: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();

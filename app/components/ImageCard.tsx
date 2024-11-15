@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { addBookmark, removeBookmark } from '../features/bookmarkSlice'; // Action bookmark
-import { RootState } from '../store'; // Import RootState untuk akses state
+import { addBookmark, removeBookmark } from '../features/bookmarkSlice'; 
+import { RootState } from '../store'; 
 
 const ImageCard = ({ image }: { image: any }) => {
   const dispatch = useDispatch();

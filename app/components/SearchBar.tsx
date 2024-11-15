@@ -26,7 +26,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ value, onChangeText, placeholder 
 const styles = StyleSheet.create({
   container: {
     marginBottom: 16,
-    paddingHorizontal: 16,
   },
   input: {
     height: 50,
@@ -36,7 +35,7 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     fontSize: 16,
     backgroundColor: '#fff',
-    elevation: 3, // Add shadow for Android
+    elevation: 3,
   },
 });
 
